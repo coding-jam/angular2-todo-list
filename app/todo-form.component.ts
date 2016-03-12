@@ -9,7 +9,7 @@ import {Component, Output, EventEmitter} from "angular2/core";
         <form (ngSubmit)="addNewElement()">
           <div class="row">
             <div class="col-sm-8">
-                <input ref="todoInput" type="text" class="form-control" id="textInput" placeholder="Add Todo..." [(ngModel)]="element"/>
+                <input ref="todoInput" type="text" class="form-control" id="textInput" placeholder="Add Todo..." [(ngModel)]="element" autocomplete="off"/>
             </div>
             <div class="col-sm-4">
                 <input type="submit" class="btn btn-default" value="Save"/>
