@@ -15,6 +15,9 @@ import {Todo} from "./models/todo";
                         <button class="pull-right btn btn-default" (click)="markDone(todo)" *ngIf="!todo.done">
                             Done
                         </button>
+                        <button class="pull-right btn btn-default" (click)="markUndone(todo)" *ngIf="todo.done">
+                            Redo
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -33,6 +36,10 @@ export class TodoListComponent {
 
     markDone(todo: Todo) {
         todo.done = true;
+    }
+
+    markUndone(todo: Todo) {
+        todo.done = false;
     }
 
 }
