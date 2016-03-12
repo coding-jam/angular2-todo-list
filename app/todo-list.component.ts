@@ -9,13 +9,13 @@ import {Todo} from "./models/todo";
     template: `
         <div class="row">
             <table class="table">
-                <tr *ngFor="#todo of todos">
+                <tr *ngFor="#todo of todos; #i = index">
                     <td [class.done-true]="todo.done">{{todo.text}}</td>
                     <td>
-                        <button class="pull-right btn btn-default" (click)="markDone(todo)" *ngIf="!todo.done">
+                        <button class="pull-right btn btn-default" (click)="markDone(todo, i)" *ngIf="!todo.done">
                             Done
                         </button>
-                        <button class="pull-right btn btn-default" (click)="markUndone(todo)" *ngIf="todo.done">
+                        <button class="pull-right btn btn-default" (click)="markUndone(todo, i)" *ngIf="todo.done">
                             Redo
                         </button>
                     </td>
@@ -34,11 +34,13 @@ export class TodoListComponent {
 
     @Input() todos: Todo[];
 
-    markDone(todo: Todo) {
+    markDone(todo: Todo, index: number) {
         todo.done = true;
+        console.log(index)
+        this.todos.splice(index, 1);
     }
 
-    markUndone(todo: Todo) {
+    markUndone(todo: Todo, index: number) {
         todo.done = false;
     }
 
