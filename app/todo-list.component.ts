@@ -3,6 +3,7 @@
  */
 import {Component, Input} from "angular2/core";
 import {Todo} from "./models/todo";
+import {TodoListService} from "./services/todo-list.service";
 
 @Component({
     selector: 'todo-list',
@@ -29,17 +30,24 @@ import {Todo} from "./models/todo";
           color: #CCC;
         }`
     ],
+    providers: [
+        TodoListService
+    ]
 })
 export class TodoListComponent {
 
     @Input() todos: Todo[];
 
+    constructor(private _todoListService: TodoListService) {}
+
     markDone(todo: Todo) {
         todo.done = true;
+        this._todoListService.update(todo);
     }
 
     markUndone(todo: Todo) {
         todo.done = false;
+        this._todoListService.update(todo);
     }
 
 }
