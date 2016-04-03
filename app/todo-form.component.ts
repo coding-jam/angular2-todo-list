@@ -2,6 +2,7 @@
  * Created by pizzo on 28/02/16.
  */
 import {Component, Output, EventEmitter} from "angular2/core";
+import {TodoListService} from "./services/todo-list.service";
 
 @Component({
     selector: 'todo-form',
@@ -17,16 +18,15 @@ import {Component, Output, EventEmitter} from "angular2/core";
           </div>
         </form>
     `,
-
 })
 export class TodoFormComponent {
 
-    @Output() onNewElement: EventEmitter = new EventEmitter<string>();
+    public element = '';
 
-    private element = '';
+    constructor(private _todoListService: TodoListService) {}
 
     addTodo() {
-        this.onNewElement.emit(this.element);
+        this._todoListService.store({id: null, text: this.element, done: false});
         this.element = '';
     }
 }

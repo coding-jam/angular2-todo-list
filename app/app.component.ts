@@ -12,9 +12,9 @@ import {TodoListService} from "./services/todo-list.service";
     template: `
         <div class="container">
     		<h1 class="text-center">{{title}}</h1>
-            <todo-form (onNewElement)="addNewElement($event)"></todo-form>
+            <todo-form></todo-form>
             <hr/>
-    		<todo-list [todos]="todoList"></todo-list>
+    		<todo-list></todo-list>
     	</div>
     `,
     directives: [
@@ -29,13 +29,4 @@ export class AppComponent {
 
     public title = 'TodoApp';
 
-    public todoList: Todo[] = [];
-
-    constructor(private _todoListService: TodoListService) {}
-
-    addNewElement(element: string) {
-        let todo = {id: this.todoList.length + 1, text: element, done: false};
-        this.todoList.push(todo);
-        this._todoListService.store(todo);
-    }
 }

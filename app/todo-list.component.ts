@@ -33,9 +33,15 @@ import {TodoListService} from "./services/todo-list.service";
 })
 export class TodoListComponent {
 
-    @Input() todos: Todo[];
+    public todos: Todo[];
 
-    constructor(private _todoListService: TodoListService) {}
+    constructor(private _todoListService: TodoListService) {
+        this.todos = this._todoListService.getAll();
+        this._todoListService.onStore()
+            .subscribe((todo: Todo) => {
+                this.todos.push(todo);
+            });
+    }
 
     markDone(todo: Todo) {
         todo.done = true;
