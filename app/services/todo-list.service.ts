@@ -13,13 +13,15 @@ export class TodoListService {
     private _onStore = new Subject();
 
     store(todo: Todo) {
-        let todos: Todo[] = this.getAll();
-        // clono l'oggetto todo, non tocco quello in ingresso
-        let newTodo = Object.assign({}, todo, {id : todo.id || todos.length + 1});
-        todos.push(newTodo);
-        this._onStore.next(newTodo);
+        this.getAll()
+            .then(todos => {
+                // clono l'oggetto todo, non tocco quello in ingresso
+                let newTodo = Object.assign({}, todo, {id : todo.id || todos.length + 1});
+                todos.push(newTodo);
+                this._onStore.next(newTodo);
 
-        this.storeAll(todos);
+                this.storeAll(todos);
+            });
     }
 
     onStore() {
@@ -33,22 +35,25 @@ export class TodoListService {
     }
 
     getAll() {
-        return this.doInStorage(storage => {
+        return Promise.resolve(this.doInStorage(storage => {
             return JSON.parse(storage.getItem(TodoListService.LOCAL_STORAGE_KEY)) || [];
-        })
+        }));
     }
 
     update(todo: Todo) {
-        let todos = this.getAll()
-            .map(oldTodo => {
-                if (oldTodo.id == todo.id) {
-                    return todo
-                } else {
-                    return oldTodo;
-                }
-            });
+        this.getAll()
+            .then(todos => {
+                todos
+                .map(oldTodo => {
+                    if (oldTodo.id == todo.id) {
+                        return todo
+                    } else {
+                        return oldTodo;
+                    }
+                });
 
-        this.storeAll(todos);
+                this.storeAll(todos);
+            });
     }
 
     private doInStorage(callback) {

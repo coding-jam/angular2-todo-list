@@ -36,7 +36,9 @@ export class TodoListComponent {
     public todos: Todo[];
 
     constructor(private _todoListService: TodoListService) {
-        this.todos = this._todoListService.getAll();
+        this._todoListService.getAll()
+            .then(todos => this.todos = todos);
+        
         this._todoListService.onStore()
             .subscribe((todo: Todo) => {
                 this.todos.push(todo);
