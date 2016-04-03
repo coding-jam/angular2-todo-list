@@ -6,12 +6,12 @@ import {Component, Output, EventEmitter} from "angular2/core";
 @Component({
     selector: 'todo-form',
     template: `
-        <form (ngSubmit)="addNewElement()">
+        <form (ngSubmit)="addTodo()">
           <div class="row">
-            <div class="col-sm-8">
+            <div class="col-xs-10">
                 <input ref="todoInput" type="text" class="form-control" id="textInput" placeholder="Add Todo..." [(ngModel)]="element" autocomplete="off"/>
             </div>
-            <div class="col-sm-4">
+            <div class="col-xs-2">
                 <input type="submit" class="btn btn-default" value="Save"/>
             </div>
           </div>
@@ -25,7 +25,7 @@ export class TodoFormComponent {
 
     private element = '';
 
-    addNewElement() {
+    addTodo() {
         this.onNewElement.emit(this.element);
         this.element = '';
     }
