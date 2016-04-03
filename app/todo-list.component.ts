@@ -29,9 +29,6 @@ import {TodoListService} from "./services/todo-list.service";
           text-decoration: line-through;
           color: #CCC;
         }`
-    ],
-    providers: [
-        TodoListService
     ]
 })
 export class TodoListComponent {
