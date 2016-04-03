@@ -1,7 +1,7 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component, Input} from "angular2/core";
+import {Component, Input, OnInit} from "angular2/core";
 import {Todo} from "./models/todo";
 import {TodoListService} from "./services/todo-list.service";
 
@@ -31,11 +31,20 @@ import {TodoListService} from "./services/todo-list.service";
         }`
     ]
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
 
     @Input() todos: Todo[];
 
     constructor(private _todoListService: TodoListService) {}
+
+    ngOnInit():any {
+        this._todoListService.getAll()
+            .subscribe((todos: Todo[]) => {
+                todos.forEach(todo => this.todos.push(todo));
+            },
+            error => alert(error));
+    }
+
 
     markDone(todo: Todo) {
         todo.done = true;

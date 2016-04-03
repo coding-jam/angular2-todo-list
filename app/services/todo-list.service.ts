@@ -3,50 +3,31 @@
  */
 import {Injectable} from "angular2/core";
 import {Todo} from "../models/todo";
+import {Http} from "angular2/http";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class TodoListService {
 
-    private static LOCAL_STORAGE_KEY = "todoList";
+    private static baseUrl = 'http://private-11b6dd-todolist32.apiary-mock.com';
+
+    constructor(private http: Http) {}
 
     store(todo: Todo) {
-        let todos: Todo[] = this.getAll();
-        todos.push(todo);
-
-        this.storeAll(todos);
-    }
-
-    storeAll(todos: Todo[]) {
-        this.doInStorage(storage => {
-            storage.setItem(TodoListService.LOCAL_STORAGE_KEY, JSON.stringify(todos))
-        })
+        console.log('Storing' + todo);
     }
 
     getAll() {
-        return this.doInStorage(storage => {
-            return JSON.parse(storage.getItem(TodoListService.LOCAL_STORAGE_KEY)) || [];
-        })
+        return this.http.get(TodoListService.baseUrl + '/todos')
+            .map(res => res.json())
+            .do(data => console.log(data)) // eyeball results in the console
+            .catch(res => {
+                console.error(res.toString());
+                return Observable.throw(res.message || 'Server error')
+            });
     }
 
     update(todo: Todo) {
-        let todos = this.getAll()
-            .map(oldTodo => {
-                if (oldTodo.id == todo.id) {
-                    return todo
-                } else {
-                    return oldTodo;
-                }
-            });
-
-        this.storeAll(todos);
-    }
-
-    private doInStorage(callback) {
-        if (window.sessionStorage) {
-            return callback(window.sessionStorage);
-        } else {
-            console.error('Local storage not supported!');
-            return null;
-        }
+        console.log('Update');
     }
 }
