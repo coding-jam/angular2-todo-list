@@ -11,6 +11,7 @@ import {TodoListService} from "./services/todo-list.service";
         <div class="row">
             <table class="table">
                 <tr *ngFor="#todo of todos">
+                    <td [class.done-true]="todo.done">{{todo.id}}</td>
                     <td [class.done-true]="todo.done">{{todo.text}}</td>
                     <td>
                         <button class="pull-right btn btn-default" (click)="markDone(todo)" *ngIf="!todo.done">
@@ -48,12 +49,17 @@ export class TodoListComponent implements OnInit {
 
     markDone(todo: Todo) {
         todo.done = true;
-        this._todoListService.update(todo);
+        this.mark(todo);
     }
 
     markUndone(todo: Todo) {
         todo.done = false;
-        this._todoListService.update(todo);
+        this.mark(todo);
+    }
+
+    private mark(todo: Todo) {
+        this._todoListService.update(todo)
+            .subscribe(null, alert);
     }
 
 }

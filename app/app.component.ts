@@ -35,7 +35,7 @@ export class AppComponent {
 
     addNewElement(element: string) {
         let todo = {id: this.todoList.length + 1, text: element, done: false};
-        this.todoList.push(todo);
-        this._todoListService.store(todo);
+        this._todoListService.store(todo)
+            .subscribe(todo => this.todoList.push(todo), alert);
     }
 }
