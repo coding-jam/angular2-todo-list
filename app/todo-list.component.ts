@@ -38,11 +38,11 @@ export class TodoListComponent implements OnInit {
     constructor(private _todoListService: TodoListService) {}
 
     ngOnInit():any {
-        this._todoListService.getAll()
-            .subscribe((todos: Todo[]) => {
+        this._todoListService.getAll().subscribe(
+            (todos: Todo[]) => {
                 todos.forEach(todo => this.todos.push(todo));
             },
-            error => alert(error));
+            (error: string) => alert(error));
     }
 
 

@@ -9,7 +9,7 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class TodoListService {
 
-    private static baseUrl = 'http://private-11b6dd-todolist32.apiary-mock.com';
+    private static baseUrl = '/api';
 
     constructor(private http: Http) {}
 
