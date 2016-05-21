@@ -1,41 +1,48 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component} from "@angular/core";
-import {TodoFormComponent} from "./todo-form.component";
-import {TodoListComponent} from "./todo-list.component";
-import {Todo} from "./models/todo";
+import {Component, OnInit} from "@angular/core";
+import {Routes, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 import {TodoListService} from "./services/todo-list.service";
+import {TodosComponent} from "./todos.components";
+import {DoneListComponent} from "./done-list.component";
 
 @Component({
     selector: 'todo-list-app',
     template: `
         <div class="container">
-    		<h1 class="text-center">{{title}}</h1>
-            <todo-form (onNewElement)="addNewElement($event)"></todo-form>
-            <hr/>
-    		<todo-list [todos]="todoList"></todo-list>
+            <div class="row">
+                <div class="col-md-2">
+                    <nav style="margin-top: 5em;">
+                        <ul class="nav nav-pills nav-stacked">
+                          <li role="presentation"><a [routerLink]="['#/todos']">Todos</a></li>
+                          <li role="presentation"><a [routerLink]="['#/done']">Done</a></li>
+                        </ul>
+                    </nav>          
+                </div>
+                <div class="col-md-10">
+    		        <router-outlet></router-outlet>
+                </div>
+            </div>
     	</div>
     `,
-    directives: [
-        TodoFormComponent,
-        TodoListComponent
-    ],
+    directives: [ROUTER_DIRECTIVES],
     providers: [
+        ROUTER_PROVIDERS,
         TodoListService
     ]
 })
-export class AppComponent {
-
+@Routes([{
+    path: '#/todos', component: TodosComponent
+},{
+    path: '#/done', component: DoneListComponent
+}])
+export class AppComponent implements OnInit {
     public title = 'TodoApp';
 
-    public todoList: Todo[] = [];
+    constructor(private router: Router) {}
 
-    constructor(private _todoListService: TodoListService) {}
-
-    addNewElement(element: string) {
-        let todo = {id: this.todoList.length + 1, text: element, done: false};
-        this._todoListService.store(todo)
-            .subscribe(todo => this.todoList.push(todo), alert);
+    ngOnInit() {
+        this.router.navigate(['#/todos']);
     }
 }

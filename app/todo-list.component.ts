@@ -8,9 +8,9 @@ import {TodoListService} from "./services/todo-list.service";
 @Component({
     selector: 'todo-list',
     template: `
-        <div class="row">
+        <div class="col-xs-12">
             <table class="table">
-                <tr *ngFor="#todo of todos">
+                <tr *ngFor="let todo of todos">
                     <td [class.done-true]="todo.done">{{todo.id}}</td>
                     <td [class.done-true]="todo.done">{{todo.text}}</td>
                     <td>
