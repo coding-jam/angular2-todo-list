@@ -1,7 +1,7 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component} from "angular2/core";
+import {Component} from "@angular/core";
 import {TodoFormComponent} from "./todo-form.component";
 import {TodoListComponent} from "./todo-list.component";
 import {Todo} from "./models/todo";

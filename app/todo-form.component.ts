@@ -1,7 +1,7 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component, Output, EventEmitter} from "angular2/core";
+import {Component, Output, EventEmitter} from "@angular/core";
 
 @Component({
     selector: 'todo-form',
@@ -21,7 +21,7 @@ import {Component, Output, EventEmitter} from "angular2/core";
 })
 export class TodoFormComponent {
 
-    @Output() onNewElement: EventEmitter = new EventEmitter<string>();
+    @Output() onNewElement: EventEmitter<string> = new EventEmitter<string>();
 
     private element = '';
 

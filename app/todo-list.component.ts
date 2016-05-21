@@ -1,7 +1,7 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component, Input, OnInit} from "angular2/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Todo} from "./models/todo";
 import {TodoListService} from "./services/todo-list.service";
 

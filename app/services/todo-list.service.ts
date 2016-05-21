@@ -1,9 +1,9 @@
 /**
  * Created by pizzo on 13/03/16.
  */
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 import {Todo} from "../models/todo";
-import {Http, RequestOptions, Headers} from "angular2/http";
+import {Http, RequestOptions, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
