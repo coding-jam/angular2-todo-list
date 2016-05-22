@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {OnActivate, RouteSegment} from "@angular/router";
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {OnActivate, CanDeactivate, RouteTree, RouteSegment} from "@angular/router";
 import {Todo} from "./models/todo";
 import {TodoListService} from "./services/todo-list.service";
 import {Observable} from "rxjs/Observable";
@@ -18,19 +18,30 @@ import {Observable} from "rxjs/Observable";
     	</div>
     `
 })
-export class DoneListComponent implements OnActivate {
+export class DoneListComponent implements OnActivate, CanDeactivate, OnInit, OnDestroy {
     title:string = 'Done List';
-
     todos: Todo[] = [];
-
     constructor(private _todoListService: TodoListService) {}
+    ngOnInit() {
+        console.log('Init ' + this.title);
+    }
+
+    ngOnDestroy() {
+        console.log('Destroy ' + this.title);
+    }
 
     routerOnActivate(curr: RouteSegment):void {
+        console.log('Entering view ' + this.title);
         this._todoListService.getAll()
             .flatMap((todos:Todo[]) => Observable.from(todos))
             .filter((todo: Todo) => todo.done)
             .subscribe(
                 (todo: Todo) => this.todos.push(todo),
                 (error: string) => alert(error));
+    }
+
+    routerCanDeactivate(currTree?:RouteTree, futureTree?:RouteTree):Promise<boolean> {
+        console.log('Leaving view ' + this.title);
+        return Promise.resolve(true);
     }
 }
