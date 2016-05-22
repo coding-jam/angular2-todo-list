@@ -20,8 +20,11 @@ import {Observable} from "rxjs/Observable";
 })
 export class DoneListComponent implements OnActivate, CanDeactivate, OnInit, OnDestroy {
     title:string = 'Done List';
+
     todos: Todo[] = [];
+
     constructor(private _todoListService: TodoListService) {}
+
     ngOnInit() {
         console.log('Init ' + this.title);
     }
