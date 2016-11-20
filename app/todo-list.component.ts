@@ -1,7 +1,7 @@
 /**
  * Created by pizzo on 28/02/16.
  */
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, Output, OnInit, EventEmitter} from "@angular/core";
 import {Todo} from "./models/todo";
 import {TodoListService} from "./services/todo-list.service";
 
@@ -36,6 +36,10 @@ export class TodoListComponent implements OnInit {
 
     @Input() todos: Todo[];
 
+    @Output() onDone: EventEmitter<Todo> = new EventEmitter<Todo>();
+
+    @Output() onUndone: EventEmitter<Todo> = new EventEmitter<Todo>();
+
     constructor(private _todoListService: TodoListService) {}
 
     ngOnInit():any {
@@ -46,20 +50,10 @@ export class TodoListComponent implements OnInit {
             (error: string) => alert(error));
     }
 
-
     markDone(todo: Todo) {
-        todo.done = true;
-        this.mark(todo);
+        this.onDone.emit(todo);
     }
-
     markUndone(todo: Todo) {
-        todo.done = false;
-        this.mark(todo);
+        this.onUndone.emit(todo);
     }
-
-    private mark(todo: Todo) {
-        this._todoListService.update(todo)
-            .subscribe(null, alert);
-    }
-
 }

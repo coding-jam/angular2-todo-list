@@ -14,7 +14,7 @@ import {TodoListService} from "./services/todo-list.service";
     		<h1 class="text-center">{{title}}</h1>
             <todo-form (onNewElement)="addNewElement($event)"></todo-form>
             <hr/>
-    		<todo-list [todos]="todoList"></todo-list>
+    		<todo-list [todos]="todoList" (onDone)="markDone($event)" (onUndone)="markUndone($event)"></todo-list>
     	</div>
     `,
     directives: [
@@ -34,5 +34,20 @@ export class TodosComponent {
         let todo = {id: this.todoList.length + 1, text: element, done: false};
         this._todoListService.store(todo)
             .subscribe(todo => this.todoList.push(todo), alert);
+    }
+
+    markDone(todo: Todo) {
+        todo.done = true;
+        this.mark(todo);
+    }
+
+    markUndone(todo: Todo) {
+        todo.done = false;
+        this.mark(todo);
+    }
+
+    private mark(todo: Todo) {
+        this._todoListService.update(todo)
+            .subscribe(null, alert);
     }
 }
